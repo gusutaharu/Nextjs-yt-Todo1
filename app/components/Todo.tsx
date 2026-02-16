@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Task } from "../types";
-import { editTodo } from "../api";
+import { deleteTodo, editTodo } from "../api";
 import { useRouter } from "next/navigation";
 
 interface TodoProps {
@@ -28,6 +28,11 @@ const Todo = ({ todo }: TodoProps) => {
   const handleSave = async () => {
     await editTodo(todo.id, editedText);
     setIsEditing(false);
+    router.refresh();
+  };
+
+  const handleDelete = async () => {
+    await deleteTodo(todo.id);
     router.refresh();
   };
   return (
@@ -60,7 +65,7 @@ const Todo = ({ todo }: TodoProps) => {
             </button>
           )}
 
-          <button className="text-red-500">Delete</button>
+          <button className="text-red-500" onClick={handleDelete}>Delete</button>
         </div>
       </li>
     </>
