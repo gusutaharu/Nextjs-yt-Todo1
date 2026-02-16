@@ -21,3 +21,16 @@ export const addTodo = async (todo: Task):Promise<Task[]> => {
 
   return newtodos;
 };
+
+export const editTodo = async (id: string, newText: string):Promise<Task[]> => {
+  const res = await fetch(`http://localhost:3001/tasks/${id}`,{
+    method: "PUT",
+    headers: {
+      "Content-Type" : "application/json",
+    },
+    body: JSON.stringify({ text: newText }),
+  });
+  const updateTodos = res.json();
+
+  return updateTodos;
+};
